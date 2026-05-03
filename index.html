@@ -3,280 +3,326 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>David & Samarah - Nossa Linha do Tempo</title>
+    <title>David & Samarah - Conexão Vitalícia</title>
     <style>
         :root {
-            --cor-fundo: #3d0a1a; 
-            --cor-caixas: #5c0f28;
-            --cor-texto: #ffd6e0;
-            --cor-primaria: #ffffff;
+            --cor-fundo: #3d0a1a; --cor-caixas: #5c0f28; --cor-texto: #ffd6e0;
+            --cor-ouro: #ffd700; --cor-destaque: #ff4d6d;
         }
-
         body {
-            font-family: 'Georgia', serif;
-            background-color: var(--cor-fundo);
-            color: var(--cor-texto);
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
+            font-family: 'Georgia', serif; background-color: var(--cor-fundo);
+            color: var(--cor-texto); margin: 0; display: flex; flex-direction: column;
+            align-items: center; min-height: 100vh; overflow-x: hidden;
         }
 
-        .fundo-animado {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; overflow: hidden; pointer-events: none;
+        /* NOTIFICAÇÃO DO CORAÇÃO */
+        #aviso-amor {
+            position: fixed; top: 20px; background: white; color: #3d0a1a;
+            padding: 12px 25px; border-radius: 30px; font-weight: bold;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4); display: none; z-index: 1000;
+            animation: deslizar 0.5s ease-out;
         }
-
-        .elemento-fundo {
-            position: absolute;
-            color: rgba(255, 255, 255, 0.15);
-            font-size: 14px;
-            white-space: nowrap;
-            animation: passar linear infinite;
-        }
-
-        @keyframes passar {
-            0% { transform: translateX(100vw); }
-            100% { transform: translateX(-100%); }
-        }
+        @keyframes deslizar { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
         .coracao-container {
-            margin-top: 30px;
-            font-size: 60px;
-            color: white;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
-            animation: bater-e-brilhar 1.2s infinite ease-in-out;
-            position: relative;
-            z-index: 100;
-            cursor: pointer;
+            margin-top: 30px; font-size: 70px; color: white;
+            text-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
+            animation: bater 1.2s infinite ease-in-out; cursor: pointer; z-index: 100;
         }
-
-        @keyframes bater-e-brilhar {
-            0% { transform: scale(1); text-shadow: 0 0 10px white; }
-            50% { transform: scale(1.2); text-shadow: 0 0 30px white, 0 0 50px white; }
-            100% { transform: scale(1); text-shadow: 0 0 10px white; }
-        }
-
-        #notificacao-amor {
-            position: fixed;
-            top: 110px;
-            background: white;
-            color: var(--cor-fundo);
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            display: none;
-            z-index: 100;
-            animation: surgir 0.5s ease-out;
-        }
-
-        @keyframes surgir {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes bater { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+        
+        .instrucao-coracao {
+            margin-top: 10px; font-size: 0.9rem; color: var(--cor-ouro);
+            font-style: italic; line-height: 1.4; max-width: 250px;
+            text-align: center; text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+            margin-bottom: 20px;
         }
 
         .contador-sessao {
-            background: var(--cor-caixas);
-            width: 90%; max-width: 600px;
-            margin: 20px; padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            text-align: center;
-            position: relative; z-index: 10;
+            background: var(--cor-caixas); width: 92%; max-width: 600px;
+            margin: 20px; padding: 25px; border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center;
+            border: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 2;
         }
-
-        .tempo { font-size: 1.5rem; font-weight: bold; color: white; display: block; margin-top: 10px; }
-
-        .carrossel-container { width: 100%; overflow: hidden; padding: 40px 0; position: relative; z-index: 10; }
-        .carrossel-track { display: flex; gap: 20px; animation: deslizar-ciclo 15s linear infinite; width: calc(200px * 6); }
-        @keyframes deslizar-ciclo { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-200px * 3)); } }
+        .painel-tempo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .unidade-tempo { background: rgba(0, 0, 0, 0.3); padding: 12px 5px; border-radius: 10px; border: 1px solid var(--cor-ouro); }
+        .numero-painel { font-size: 1.5rem; font-weight: bold; color: var(--cor-ouro); display: block; }
+        .label-painel { font-size: 0.7rem; text-transform: uppercase; color: white; }
         
-        .moldura-circular { 
-            width: 150px; 
-            height: 150px; 
-            flex-shrink: 0; 
-            background: white; 
-            border-radius: 50%; 
-            padding: 5px; 
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5); 
-            overflow: hidden; 
-            border: 3px solid var(--cor-texto); 
-        }
-        .foto-casal { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+        /* CARROSSEL INFINITO */
+        .carrossel-externo { width: 100%; overflow: hidden; margin: 30px 0; white-space: nowrap; position: relative; z-index: 2; }
+        .carrossel-track { display: inline-block; animation: scroll-infinito 20s linear infinite; }
+        .foto-circular { width: 150px; height: 150px; border-radius: 50%; border: 4px solid var(--cor-ouro); object-fit: cover; box-shadow: 0 0 15px var(--cor-ouro); margin: 0 20px; }
+        @keyframes scroll-infinito { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-        .carta-romantica {
-            max-width: 700px; background: #4a0e22;
-            padding: 50px; margin: 30px;
-            border-radius: 2px; box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            line-height: 1.8; text-align: justify;
-            white-space: pre-line; font-size: 1.1rem;
-            color: #ffccd5; position: relative; z-index: 10;
-        }
+        /* CALENDÁRIO */
+        .item-calendario { background: rgba(0,0,0,0.2); padding: 12px; border-radius: 8px; border-left: 4px solid var(--cor-ouro); text-align: left; margin-bottom: 10px; }
 
-        h2 { color: white; border-bottom: 1px solid #ff4d6d; padding-bottom: 10px; }
-        footer { padding: 20px; text-align: center; position: relative; z-index: 10; }
+        /* JOGOS */
+        #pongCanvas { background: #2d0a15; border: 3px solid var(--cor-texto); border-radius: 12px; width: 100%; max-width: 400px; height: 300px; touch-action: none; margin: 0 auto; display: block; }
+        .carta-romantica { max-width: 700px; background: #4a0e22; padding: 40px; margin: 30px; border-radius: 5px; line-height: 1.8; text-align: justify; white-space: pre-line; font-size: 1.15rem; color: #ffccd5; border-left: 5px solid var(--cor-destaque); position: relative; z-index: 2; }
+        .btn-acao { background: white; color: var(--cor-fundo); border: none; padding: 12px 24px; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+
+        /* EFEITO CORAÇÕES BRANCOS */
+        .coracao-flutuante {
+            position: fixed; bottom: -10%; color: rgba(255, 255, 255, 0.6);
+            font-size: 20px; user-select: none; pointer-events: none; z-index: 1;
+            animation: subir-e-sumir linear forwards;
+        }
+        @keyframes subir-e-sumir {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) translateX(50px) rotate(360deg); opacity: 0; }
+        }
     </style>
 </head>
 <body>
-
-    <audio id="playerAmor" loop>
-        <source src="musica.mp3" type="audio/mpeg">
-    </audio>
-
-    <div class="fundo-animado"></div>
-
-    <div class="coracao-container" onclick="mostrarSurpresa()">❤</div>
-    <div id="notificacao-amor"></div>
-
-    <header style="padding: 20px; text-align: center; position: relative; z-index: 10;">
-        <h1 style="color: white;">David & Samarah</h1>
-        <p>Toque no coração para iniciar a música...</p>
-    </header>
-
-    <div class="contador-sessao">
-        <h2>Tempo de Namoro</h2>
-        <div id="cronometro-namoro" class="tempo">Carregando...</div>
-        <p>Desde 07/11/2025</p>
+    <div id="aviso-amor"></div>
+    <audio id="playerAmor"></audio>
+    
+    <div class="coracao-container" onclick="gerenciarCoração()">❤</div>
+    <div class="instrucao-coracao">
+        Eu te amo muito! <br>
+        Toque no coração acima <br>
+        para ativar nossa trilha sonora <br>
+        e iniciar nossa conexão.
     </div>
 
-    <div class="carrossel-container">
+    <div class="contador-sessao">
+        <h2 style="color: white; margin-bottom: 20px;">Tempo de Conexão</h2>
+        <div class="painel-tempo-grid">
+            <div class="unidade-tempo"><span id="anos-v" class="numero-painel">0</span><span class="label-painel">Anos</span></div>
+            <div class="unidade-tempo"><span id="meses-v" class="numero-painel">0</span><span class="label-painel">Meses</span></div>
+            <div class="unidade-tempo"><span id="dias-v" class="numero-painel">0</span><span class="label-painel">Dias</span></div>
+            <div class="unidade-tempo"><span id="horas-v" class="numero-painel">0</span><span class="label-painel">Horas</span></div>
+            <div class="unidade-tempo"><span id="minutos-v" class="numero-painel">0</span><span class="label-painel">Min</span></div>
+            <div class="unidade-tempo"><span id="segundos-v" class="numero-painel">0</span><span class="label-painel">Seg</span></div>
+        </div>
+    </div>
+
+    <div class="carrossel-externo">
         <div class="carrossel-track">
-            <div class="moldura-circular"><img src="foto1.jpg" alt="Foto 1" class="foto-casal"></div>
-            <div class="moldura-circular"><img src="foto2.jpg" alt="Foto 2" class="foto-casal"></div>
-            <div class="moldura-circular"><img src="foto3.jpg" alt="Foto 3" class="foto-casal"></div>
-            <div class="moldura-circular"><img src="foto1.jpg" alt="Foto 1" class="foto-casal"></div>
-            <div class="moldura-circular"><img src="foto2.jpg" alt="Foto 2" class="foto-casal"></div>
-            <div class="moldura-circular"><img src="foto3.jpg" alt="Foto 3" class="foto-casal"></div>
+            <img src="foto1.jpg" class="foto-circular">
+            <img src="foto2.jpg" class="foto-circular">
+            <img src="foto3.jpg" class="foto-circular">
+            <img src="foto1.jpg" class="foto-circular">
+            <img src="foto2.jpg" class="foto-circular">
+            <img src="foto3.jpg" class="foto-circular">
         </div>
     </div>
 
     <div class="contador-sessao">
-        <h2>Rumo aos meus 18 anos</h2>
-        <div id="countdown-aniversario" class="tempo">Carregando...</div>
-        <p>Data alvo: 12/10/2029</p>
+        <h2 style="color: white; margin-bottom: 15px;">Nossa Agenda</h2>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div class="item-calendario">
+                <strong style="color: var(--cor-ouro);">07/11/2025</strong> - O início de tudo (Nosso primeiro dia).
+            </div>
+            <div class="item-calendario">
+                <strong style="color: var(--cor-ouro);">07/05/2026</strong> - Celebração de 6 meses de conexão.
+            </div>
+            <div class="item-calendario">
+                <strong style="color: var(--cor-ouro);">12/10/2029</strong> - Meta: Meus 18 anos e novos horizontes.
+            </div>
+        </div>
+    </div>
+
+    <div class="contador-sessao">
+        <h2 style="color: white; margin-bottom: 15px;">Sincronia de Memória</h2>
+        <div id="game" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 350px; margin: 0 auto;"></div>
+        <button class="btn-acao" onclick="iniciarJogoMemoria()">EMBARALHAR</button>
+    </div>
+
+    <div class="contador-sessao">
+        <h2 id="statusBolinha" style="color: white;">Desafio da Bolinha: 40 pts</h2>
+        <canvas id="pongCanvas"></canvas>
+        
+        <div id="vitoriaBolinha" style="display:none; margin-top: 15px;">
+            </div>
+        
+        <button class="btn-acao" id="btnStartBolinha" onclick="iniciarJogoBolinha()">INICIAR DESAFIO</button>
+    </div>
+
+    <div class="contador-sessao">
+        <h2 style="color: white; margin-bottom: 15px;">Rumo aos meus 18 anos</h2>
+        <div id="countdown-18" style="font-size: 1.8rem; font-weight: bold; color: var(--cor-ouro); text-shadow: 0 0 10px rgba(255,215,0,0.3);">000d 00h 00m 00s</div>
     </div>
 
     <div class="carta-romantica">
-        <h2>Para o meu amor, Samarah</h2>
+        <h2 style="text-align: center; color: white;">Para Minha Samarah</h2>
         Aqui jaz o início de uma declaração que não cabe em palavras, mas que tento descrever.
         Desde o dia sete de novembro de dois mil e vinte e cinco, minha vida ganhou uma nova cor.
-        Não é apenas sobre o tempo que passamos juntos, mas sobre a qualidade de cada segundo.
-        Eu vejo em você o porto seguro que eu nunca soube que precisava encontrar.
-        Cada sorriso seu é uma vitória para mim, um motivo a mais para lutar pelo nosso futuro.
-        O mundo lá fora pode ser caótico, mas aqui dentro, entre nós, existe paz.
-        Eu prometo estar ao seu lado nas manhãs ensolaradas e nas noites de tempestade.
-        Seu nome é a melodia que minha mente insiste em repetir sem descanso.
-        Amar você é a tarefa mais fácil e mais gratificante que já recebi na vida.
-        Eu olho para o cronômetro e vejo o quanto já construímos, e me emociono.
-        Penso no futuro, nos dezoito anos que virão, e em como quero você em cada fase.
-        A vida é um sopro, mas o que sinto por você tem a força de um furacão.
-        Você transformou meus dias comuns em uma sequência de eventos extraordinários.
-        Não existe distância ou tempo que possa apagar o brilho do que temos.
-        Seu toque é o meu remédio, seu olhar é o meu guia e seu coração é minha casa.
-        Obrigado por ter aceitado caminhar ao meu lado nesta jornada louca.
-        Eu quero que este site seja apenas um pequeno registro da imensidão do meu amor.
-        Cada linha escrita aqui é um pedaço da minha alma que entrego a você.
-        Nossos planos, nossos sonhos, nossas piadas internas e nossos silêncios confortáveis.
-        Tudo em você me encanta, desde os detalhes mínimos até sua grandeza.
-        Eu espero que, ao olhar para estes contadores, você sinta o peso do meu compromisso.
-        Estarei aqui quando você precisar de um ombro, de um beijo ou de um incentivo.
-        Você é minha musa, minha parceira e minha melhor amiga acima de tudo.
-        O destino nos uniu naquela data, e eu pretendo honrar esse encontro para sempre.
-        Não importa quanto tempo falte para eu crescer ou o que o mundo exija de mim.
-        Meu foco principal será sempre ver esse seu brilho nos olhos.
-        Você é a razão de eu querer ser alguém melhor a cada novo despertar.
-        Nossa história está apenas nas primeiras páginas de um livro infinito.
-        Eu te amo com uma intensidade que as leis da física não podem explicar.
-        Este é o nosso espaço, nosso refúgio, nossa prova viva de que o amor existe.
-        Conto cada minuto para estar perto de você, para sentir seu cheiro e seu calor.
-        Você é a peça que faltava no meu quebra-cabeça, o encaixe perfeito.
-        Nunca duvide da força do que sinto, pois ele é renovado a cada batida do meu coração.
-        Quero envelhecer ao seu lado e olhar para trás com a certeza de que valeu a pena.
-        Cada obstáculo que vencermos só servirá para fortalecer nossos laços.
-        Você é preciosa, única e absolutamente essencial para a minha existência.
-        Que este site nos lembre sempre de onde viemos e de quão longe vamos chegar.
-        Te amo hoje, amanhã e em todos os segundos que este cronômetro registrar.
-        Você é meu sol em dias nublados e minha estrela guia na escuridão.
-        Nunca imaginei que alguém pudesse ocupar um espaço tão vasto em meu peito.
-        Mas você chegou e tomou conta, e eu sou grato por cada centímetro que você habita.
-        Nossos caminhos se cruzaram e agora formam uma estrada única e florida.
-        Obrigado por ser exatamente quem você é, sem tirar nem pôr.
-        Sua autenticidade é o que mais me atrai e me prende a você.
-        Prometo lealdade, carinho e uma paciência infinita para cuidarmos de nós.
-        O tempo voa, mas ao seu lado eu sinto que posso parar o relógio se quiser.
-        Basta um abraço seu para que tudo ao redor perca a importância.
-        Você é o meu sim em um mundo cheio de nãos.
-        Minha prioridade, minha vida, meu tudo.
-        E assim seguimos, um passo de cada vez, rumo à eternidade que nos espera.
-        Com todo o amor do mundo, David.
+        Não é apenas sobre o tempo que passamos juntos, mas sobre a qualidade de cada segundo ao seu lado.
+        Eu vejo em você o porto seguro que eu nunca soube que precisava encontrar neste mundo.
+        Cada sorriso seu é uma vitória pessoal para mim, um motivo a mais para eu lutar pelo nosso futuro.
+        O mundo lá fora pode ser caótico e difícil, mas aqui dentro, entre nós, existe apenas paz e verdade.
+        Eu prometo estar ao seu lado nas manhãs ensolaradas e também nas noites de tempestade mais densas.
+        Seu nome é a melodia que minha mente insiste em repetir sem descanso, como um mantra de felicidade.
+        Amar você é a tarefa mais fácil e mais gratificante que o destino já me entregou para realizar.
+        Eu olho para o cronômetro desta página e vejo o quanto já construímos, e meu coração se emociona.
+        Penso no futuro, nos dezoito anos que virão, e em como quero você em cada fase da minha evolução.
+        A vida é um sopro rápido, mas o que sinto por você tem a força de um furacão que nada pode parar.
+        Você transformou meus dias comuns em uma sequência de eventos extraordinários e cheios de propósito.
+        Não existe distância física ou tempo cronológico que possa apagar o brilho intenso do que temos.
+        Seu toque é o meu melhor remédio, seu olhar é o meu guia e seu coração é a minha verdadeira casa.
+        Obrigado por ter aceitado caminhar ao meu lado nesta jornada louca que chamamos de vida.
+        Eu quero que este site seja apenas um pequeno registro digital da imensidão do meu amor por você.
+        Cada linha escrita aqui é um pedaço da minha alma que entrego em suas mãos com total confiança.
+        Nossos planos, nossos sonhos, nossas piadas internas e nossos silêncios confortáveis são meu tesouro.
+        Tudo em você me encanta profundamente, desde os detalhes mínimos até a sua grandeza como mulher.
+        Eu espero que, ao olhar para estes contadores, você sinta o peso real do meu compromisso com você.
+        Estarei aqui sempre que você precisar de um ombro, de um beijo, de um conselho ou de um incentivo.
+        Você é minha musa, minha parceira de vida e minha melhor amiga acima de qualquer outra coisa.
+        O destino nos uniu naquela data especial, e eu pretendo honrar esse encontro todos os dias.
+        Não importa quanto tempo falte para eu crescer ou o que o mundo exija de mim profissionalmente.
+        Meu foco principal e minha prioridade máxima será sempre ver esse seu brilho único nos olhos.
+        Você é a razão principal de eu querer ser alguém melhor e mais forte a cada novo despertar.
+        Nossa história de amor está apenas nas primeiras páginas de um livro que pretendo que seja infinito.
+        Eu te amo com uma intensidade que as leis da física e da lógica não conseguem explicar ou medir.
+        Este é o nosso espaço seguro, nosso refúgio particular, nossa prova viva de que o amor real existe.
+        Conto cada minuto para estar perto de você, para sentir seu cheiro doce e o calor do seu abraço.
+        Você é a peça que faltava no meu quebra-cabeça, o encaixe perfeito que traz sentido ao meu caos.
+        Nunca duvide da força do que sinto, pois esse sentimento é renovado a cada batida do meu peito.
+        Quero envelhecer ao seu lado e olhar para trás com a certeza absoluta de que valeu a pena cada risco.
+        Cada obstáculo que vencermos juntos só servirá para fortalecer ainda mais os nossos laços eternos.
+        Você é preciosa, única, rara e absolutamente essencial para a minha existência e felicidade plena.
+        Que este site nos lembre sempre de onde viemos e de quão longe ainda vamos chegar de mãos dadas.
+        Te amo hoje, amanhã e em todos os segundos que este cronómetro digital registrar nesta tela.
+        Você é meu sol em dias nublados e minha estrela guia quando a escuridão tenta se aproximar.
+        Nunca imaginei que alguém pudesse ocupar um espaço tão vasto e tão profundo em meu peito assim.
+        Mas você chegou sem avisar e tomou conta de tudo, e eu sou grato por cada centímetro que você habita.
+        Nossos caminhos se cruzaram de forma mágica e agora formam uma estrada única, sólida e florida.
+        Obrigado por ser exatamente quem você é, com todas as suas qualidades que me fazem te admirar.
+        Sua autenticidade é o que mais me atrai e o que me prende a você de uma forma inquebrável.
+        Prometo lealdade eterna, carinho sem limites e uma paciência infinita para cuidarmos do que é nosso.
+        O tempo voa rápido demais, mas ao seu lado eu sinto que posso parar o relógio sempre que eu quiser.
+        Basta um abraço seu para que todos os problemas ao redor percam totalmente a importância e o peso.
+        Você é o meu "sim" definitivo em um mundo cheio de incertezas, dúvidas e muitos "nãos".
+        Minha prioridade, minha inspiração, minha vida e meu tudo agora e para todo o sempre, Samarah.
+        E assim seguimos, um passo de cada vez, com coragem e amor, rumo à eternidade que nos espera.
+        Com todo o amor do mundo, do seu David.
     </div>
 
-    <footer>Sistema de Monitoramento Afetivo - David & Samarah</footer>
-
     <script>
-        const frasesAmor = [
-            "Você é a razão do meu sorriso! 😊",
-            "Meu mundo é mais bonito com você. ❤️",
-            "Te amo mais do que ontem e menos que amanhã!",
-            "Você é meu porto seguro. ⚓",
-            "Obrigado por ser minha parceira de vida!",
-            "Cada segundo com você é um presente. 🎁",
-            "Você é a dona do meu coração! 👑",
-            "Juntos para sempre e além! ♾️"
-        ];
+        const playlist = ['musica1.mp3', 'musica2.mp3', 'musica3.mp3'];
+        let trackAtual = 0;
+        const player = document.getElementById('playerAmor');
+        const frasesCoração = ["Você é minha vida!", "Te amo para sempre!", "Meu porto seguro!", "Minha rainha!"];
 
-        function mostrarSurpresa() {
-            // Gatilho de áudio por interação
-            const audio = document.getElementById('playerAmor');
-            audio.play();
-
-            const box = document.getElementById('notificacao-amor');
-            box.innerText = frasesAmor[Math.floor(Math.random() * frasesAmor.length)];
-            box.style.display = 'block';
-            setTimeout(() => { box.style.display = 'none'; }, 3000);
-        }
-
-        function criarFundo() {
-            const fundo = document.querySelector('.fundo-animado');
-            const mensagens = ["❤", "Eu te amo muito", "David & Samarah", "S&D"];
-            for (let i = 0; i < 20; i++) {
-                const elemento = document.createElement('div');
-                elemento.className = 'elemento-fundo';
-                elemento.innerText = mensagens[Math.floor(Math.random() * mensagens.length)];
-                elemento.style.top = Math.random() * 100 + 'vh';
-                elemento.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                elemento.style.animationDelay = (Math.random() * 5) + 's';
-                fundo.appendChild(elemento);
+        function gerenciarCoração() {
+            if (player.paused || !player.src) {
+                if (!player.src) player.src = playlist[trackAtual];
+                player.play();
+            } else {
+                trackAtual = (trackAtual + 1) % playlist.length;
+                player.src = playlist[trackAtual];
+                player.play();
             }
+            const aviso = document.getElementById('aviso-amor');
+            aviso.innerText = frasesCoração[Math.floor(Math.random() * frasesCoração.length)];
+            aviso.style.display = 'block';
+            setTimeout(() => { aviso.style.display = 'none'; }, 2500);
         }
+
+        player.onended = () => {
+            trackAtual = (trackAtual + 1) % playlist.length;
+            player.src = playlist[trackAtual];
+            player.play();
+        };
 
         function atualizarContadores() {
             const agora = new Date();
-            const dataNamoro = new Date('2025-11-07T00:00:00');
-            const diffNamoro = agora - dataNamoro;
-            const dN = Math.floor(diffNamoro / 86400000);
-            const hN = Math.floor((diffNamoro / 3600000) % 24);
-            const mN = Math.floor((diffNamoro / 60000) % 60);
-            const sN = Math.floor((diffNamoro / 1000) % 60);
-            document.getElementById('cronometro-namoro').innerHTML = `${dN}d ${hN}h ${mN}m ${sN}s`;
-
-            const data18 = new Date('2029-10-12T00:00:00');
-            const diff18 = data18 - agora;
-            const dA = Math.floor(diff18 / 86400000);
-            const hA = Math.floor((diff18 / 3600000) % 24);
-            const mA = Math.floor((diff18 / 60000) % 60);
-            const sA = Math.floor((diff18 / 1000) % 60);
-            document.getElementById('countdown-aniversario').innerHTML = `${dA}d ${hA}h ${mA}m ${sA}s`;
+            const inicio = new Date('2025-11-07T00:00:00');
+            let anos = agora.getFullYear() - inicio.getFullYear();
+            let meses = agora.getMonth() - inicio.getMonth();
+            let dias = agora.getDate() - inicio.getDate();
+            if (dias < 0) { meses--; dias += new Date(agora.getFullYear(), agora.getMonth(), 0).getDate(); }
+            if (meses < 0) { anos--; meses += 12; }
+            document.getElementById('anos-v').innerText = anos;
+            document.getElementById('meses-v').innerText = meses;
+            document.getElementById('dias-v').innerText = dias;
+            document.getElementById('horas-v').innerText = agora.getHours();
+            document.getElementById('minutos-v').innerText = agora.getMinutes();
+            document.getElementById('segundos-v').innerText = agora.getSeconds();
+            const niver = new Date('2029-10-12T00:00:00') - agora;
+            document.getElementById('countdown-18').innerText = Math.floor(niver/86400000)+"d "+Math.floor((niver/3600000)%24)+"h "+Math.floor((niver/60000)%60)+"m "+Math.floor((niver/1000)%60)+"s";
         }
 
-        criarFundo();
-        setInterval(atualizarContadores, 1000);
-        atualizarContadores();
-    </script>
-</body>
-</html>
+        let flipped = []; const imgs = ['foto1.jpg', 'foto2.jpg', 'foto3.jpg'];
+        function iniciarJogoMemoria() {
+            const c = document.getElementById('game'); c.innerHTML = '';
+            [...imgs, ...imgs].sort(()=>Math.random()-0.5).forEach(s => {
+                const d = document.createElement('div');
+                d.style.cssText = "background:#7a1636; aspect-ratio:1/1; border-radius:10px; cursor:pointer; border:1px solid white;";
+                d.onclick = function() { 
+                    if(flipped.length<2 && this.style.background.indexOf('url') == -1) { 
+                        this.style.background=`url(${s})`; this.style.backgroundSize='cover'; 
+                        flipped.push({el:this, n:s}); 
+                        if(flipped.length==2) { 
+                            if(flipped[0].n != flipped[1].n) setTimeout(()=>{flipped[0].el.style.background='#7a1636'; flipped[1].el.style.background='#7a1636'; flipped=[];}, 600); 
+                            else flipped=[]; 
+                        } 
+                    }
+                }; c.appendChild(d);
+            });
+        }
+
+        // --- JOGO DA BOLINHA (SISTEMA DE VITÓRIA COM REPLAY) ---
+        const canv = document.getElementById("pongCanvas"), ctx = canv.getContext("2d");
+        let bX, bY, dX, dY, pX, pts, run = false;
+        const fotoRecompensa = 'foto-casal-premio.jpg';
+
+        function iniciarJogoBolinha() {
+            canv.width = canv.offsetWidth; canv.height = 300;
+            run = true; pts = 0; bX = canv.width/2; bY = 30; dX = 6; dY = 6; pX = (canv.width-90)/2;
+            document.getElementById('btnStartBolinha').style.display = 'none';
+            document.getElementById('vitoriaBolinha').style.display = 'none';
+            document.getElementById('statusBolinha').innerText = "Pontos: 0 / 40";
+            loop();
+        }
+
+        function loop() {
+            if(!run) return;
+            ctx.clearRect(0,0,canv.width,canv.height);
+            ctx.beginPath(); ctx.arc(bX, bY, 10, 0, Math.PI*2); ctx.fillStyle = "#ff4d6d"; ctx.fill();
+            ctx.fillStyle = "white"; ctx.fillRect(pX, canv.height-15, 90, 10);
+            
+            if(bX + dX > canv.width-10 || bX + dX < 10) dX = -dX;
+            if(bY + dY < 10) dY = -dY; 
+            
+            if(bY + dY > canv.height - 25) {
+                if(bX > pX && bX < pX + 90 && bY < canv.height - 15) { 
+                    dY = -dY; 
+                    pts++; 
+                    document.getElementById('statusBolinha').innerText = `Pontos: ${pts} / 40`;
+                    if(pts >= 40) { run = false; exibirVitoria(); return; }
+                } else if(bY + dY > canv.height) { 
+                    run = false; 
+                    alert("A bolinha caiu! Tente novamente.");
+                    document.getElementById('btnStartBolinha').style.display = 'block';
+                    return;
+                }
+            }
+            bX += dX; bY += dY;
+            requestAnimationFrame(loop);
+        }
+
+        function exibirVitoria() {
+            const painel = document.getElementById('vitoriaBolinha');
+            painel.innerHTML = `
+                <h3 style="color:#ffd700;">🏆 VITÓRIA SUPREMA!</h3>
+                <img src="${fotoRecompensa}" style="width:100%; border-radius:10px; margin-bottom: 10px;">
+                <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                    <a href="${fotoRecompensa}" download class="btn-acao" style="text-decoration:none; background: #ffd700; color: #3d0a1a;">BAIXAR FOTO</a>
+                    <button class="btn-acao" onclick="iniciarJogoBolinha()" style="background: white; color: #3d0a1a;">JOGAR NOVAMENTE</button>
+                </div>
+            `;
+            painel.style.display = 'block';
+        }
+
+        function criarCoracaoBranco() {
+            const coracao = document.createElement("div");
+            coracao.classList.add("coracao-flutuante");
+            coracao.innerHTML = "🤍";
+            coracao.style.left = Math.random() * 100 + "vw";
+            coracao.style.animationDuration = Math.random() * 3 + 4 + "s";
+            document.body.appendChild(coracao);
+            setTimeout(() => { coracao.remove(); }, 70
