@@ -278,7 +278,7 @@
             });
         }
 
-        // JOGO DA BOLINHA (velocidade reduzida)
+        // JOGO DA BOLINHA (velocidade ainda mais reduzida)
         const canv = document.getElementById("pongCanvas");
         const ctx = canv.getContext("2d");
         let bX, bY, dX, dY, pX, pts, run = false;
@@ -291,8 +291,8 @@
             pts = 0;
             bX = canv.width / 2;
             bY = 50;
-            dX = 3.5;
-            dY = 3.5;
+            dX = 2.2;   // Velocidade bem mais lenta
+            dY = 2.2;   // Velocidade bem mais lenta
             pX = (canv.width - 90) / 2;
             mouseX = pX;
 
