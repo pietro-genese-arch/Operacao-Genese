@@ -278,7 +278,7 @@
             });
         }
 
-        // JOGO DA BOLINHA (velocidade ainda mais reduzida)
+        // JOGO DA BOLINHA - Velocidade constante
         const canv = document.getElementById("pongCanvas");
         const ctx = canv.getContext("2d");
         let bX, bY, dX, dY, pX, pts, run = false;
@@ -291,8 +291,8 @@
             pts = 0;
             bX = canv.width / 2;
             bY = 50;
-            dX = 2.2;   // Velocidade bem mais lenta
-            dY = 2.2;   // Velocidade bem mais lenta
+            dX = 1.8;
+            dY = 1.8;
             pX = (canv.width - 90) / 2;
             mouseX = pX;
 
@@ -324,7 +324,7 @@
 
             if (bY >= canv.height - 35 && bY <= canv.height - 10) {
                 if (bX >= pX && bX <= pX + 90 && dY > 0) {
-                    dY = -dY * 1.05;
+                    dY = -dY;           // Apenas inverte a direção (sem aumentar velocidade)
                     pts++;
                     document.getElementById('statusBolinha').innerText = `Pontos: ${pts} / 40`;
                     if (pts >= 40) {
@@ -372,4 +372,4 @@
         };
     </script>
 </body>
-                                           </html>
+    </html>
