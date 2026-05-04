@@ -18,9 +18,7 @@
             position: fixed; top: 20px; background: white; color: #3d0a1a;
             padding: 12px 25px; border-radius: 30px; font-weight: bold;
             box-shadow: 0 5px 20px rgba(0,0,0,0.4); display: none; z-index: 1000;
-            animation: deslizar 0.5s ease-out;
         }
-        @keyframes deslizar { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         .coracao-container {
             margin-top: 30px; font-size: 70px; color: white;
             text-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
@@ -29,29 +27,27 @@
         @keyframes bater { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
         .instrucao-coracao {
             margin-top: 10px; font-size: 0.9rem; color: var(--cor-ouro);
-            font-style: italic; line-height: 1.4; max-width: 250px;
-            text-align: center; text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
-            margin-bottom: 20px;
+            text-align: center; margin-bottom: 20px;
         }
         .contador-sessao {
             background: var(--cor-caixas); width: 92%; max-width: 600px;
             margin: 20px; padding: 25px; border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center;
-            border: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 2;
+            border: 1px solid rgba(255,255,255,0.1);
         }
         .painel-tempo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
         .unidade-tempo { background: rgba(0, 0, 0, 0.3); padding: 12px 5px; border-radius: 10px; border: 1px solid var(--cor-ouro); }
         .numero-painel { font-size: 1.5rem; font-weight: bold; color: var(--cor-ouro); display: block; }
         .label-painel { font-size: 0.7rem; text-transform: uppercase; color: white; }
-        .carrossel-externo { width: 100%; overflow: hidden; margin: 30px 0; white-space: nowrap; position: relative; z-index: 2; }
+        .carrossel-externo { width: 100%; overflow: hidden; margin: 30px 0; white-space: nowrap; }
         .carrossel-track { display: inline-block; animation: scroll-infinito 20s linear infinite; }
-        .foto-circular { width: 150px; height: 150px; border-radius: 50%; border: 4px solid var(--cor-ouro); object-fit: cover; box-shadow: 0 0 15px var(--cor-ouro); margin: 0 20px; }
+        .foto-circular { width: 150px; height: 150px; border-radius: 50%; border: 4px solid var(--cor-ouro); object-fit: cover; margin: 0 20px; }
         @keyframes scroll-infinito { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         #pongCanvas { background: #2d0a15; border: 3px solid var(--cor-texto); border-radius: 12px; width: 100%; max-width: 400px; height: 300px; touch-action: none; margin: 0 auto; display: block; }
-        .carta-romantica { max-width: 700px; background: #4a0e22; padding: 40px; margin: 30px; border-radius: 5px; line-height: 1.8; text-align: justify; white-space: pre-line; font-size: 1.15rem; color: #ffccd5; border-left: 5px solid var(--cor-destaque); position: relative; z-index: 2; }
+        .carta-romantica { max-width: 700px; background: #4a0e22; padding: 40px; margin: 30px; border-radius: 5px; line-height: 1.8; text-align: justify; white-space: pre-line; font-size: 1.15rem; color: #ffccd5; border-left: 5px solid var(--cor-destaque); }
         .btn-acao { background: white; color: var(--cor-fundo); border: none; padding: 12px 24px; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .coracao-flutuante { position: fixed; bottom: -10%; color: rgba(255, 255, 255, 0.6); font-size: 20px; user-select: none; pointer-events: none; z-index: 1; animation: subir-e-sumir linear forwards; }
-        @keyframes subir-e-sumir { 0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(-110vh) translateX(50px) rotate(360deg); opacity: 0; } }
+        .coracao-flutuante { position: fixed; bottom: -10%; color: rgba(255, 255, 255, 0.6); font-size: 20px; pointer-events: none; animation: subir 6s linear forwards; }
+        @keyframes subir { to { transform: translateY(-110vh); opacity: 0; } }
     </style>
 </head>
 <body>
@@ -88,7 +84,7 @@
     <div class="contador-sessao">
         <h2 style="color: white; margin-bottom: 15px;">Sincronia de Memória</h2>
         <div id="game" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 350px; margin: 0 auto;"></div>
-        <button class="btn-acao" onclick="iniciarJogoMemoria()">EMBARALHAR CARTAS</button>
+        <button class="btn-acao" onclick="iniciarJogoMemoria()" style="margin-top:15px">EMBARALHAR CARTAS</button>
     </div>
 
     <div class="contador-sessao">
@@ -96,11 +92,8 @@
         <canvas id="pongCanvas"></canvas>
         <div id="vitoriaBolinha" style="display:none; margin-top: 15px;">
             <h3 style="color:#ffd700;">🏆 VITÓRIA SUPREMA!</h3>
-            <img src="vitoria.jpg" style="width:100%; border-radius:10px; margin-bottom: 10px; border: 2px solid #ffd700;">
-            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                <a href="vitoria.jpg" download="vitoria.jpg" class="btn-acao" style="text-decoration:none; background: #ffd700; color: #3d0a1a;">BAIXAR FOTO</a>
-                <button class="btn-acao" onclick="iniciarJogoBolinha()" style="background: white; color: #3d0a1a;">JOGAR NOVAMENTE</button>
-            </div>
+            <img src="vitoria.jpg" style="width:100%; border-radius:10px; border: 2px solid #ffd700;">
+            <a href="vitoria.jpg" download="vitoria.jpg" class="btn-acao" style="text-decoration:none; display:inline-block; margin:10px; background:#ffd700; color:#3d0a1a;">BAIXAR FOTO</a>
         </div>
         <button class="btn-acao" id="btnStartBolinha" onclick="iniciarJogoBolinha()">INICIAR DESAFIO</button>
     </div>
@@ -161,11 +154,10 @@
     </div>
 
     <script>
-        // CONFIGURAÇÃO DA MÚSICA (Nomes corrigidos conforme seu GitHub)
+        // CONFIGURAÇÃO DE ÁUDIO
         const playlist = ['musica.mp3', 'musica2.mp3', 'musica3.mp3'];
         let trackAtual = 0;
         const player = document.getElementById('playerAmor');
-        const frasesCoração = ["Você é minha vida!", "Te amo para sempre!", "Meu porto seguro!", "Minha rainha!"];
 
         function gerenciarCoração() {
             if (!player.src || player.src.includes('undefined')) {
@@ -179,12 +171,12 @@
                 player.play();
             }
             const aviso = document.getElementById('aviso-amor');
-            aviso.innerText = frasesCoração[Math.floor(Math.random() * frasesCoração.length)];
+            aviso.innerText = "Conexão Ativa: Amo Você!";
             aviso.style.display = 'block';
             setTimeout(() => { aviso.style.display = 'none'; }, 2500);
         }
 
-        // CRONÔMETRO DE TEMPO
+        // ATUALIZAÇÃO DO TEMPO
         function atualizarContadores() {
             const agora = new Date();
             const inicio = new Date('2025-11-07T00:00:00');
@@ -202,21 +194,21 @@
         }
         setInterval(atualizarContadores, 1000);
 
-        // LÓGICA DO JOGO DE MEMÓRIA (CARTAS)
+        // JOGO DE MEMÓRIA (CARTAS)
         let flipped = []; const imgs = ['foto1.jpg', 'foto2.jpg', 'foto3.jpg'];
         function iniciarJogoMemoria() {
             const c = document.getElementById('game'); c.innerHTML = '';
             [...imgs, ...imgs].sort(()=>Math.random()-0.5).forEach(s => {
                 const d = document.createElement('div');
-                d.style.cssText = "background:#7a1636; aspect-ratio:1/1; border-radius:10px; cursor:pointer; border:1px solid white; background-position:center; background-size:cover;";
+                d.style.cssText = "background-color:#7a1636; aspect-ratio:1/1; border-radius:10px; cursor:pointer; border:1px solid white; background-size:cover; background-position:center;";
                 d.onclick = function() { 
-                    if(flipped.length<2 && this.style.backgroundImage == '') { 
-                        this.style.backgroundImage=`url(${s})`; 
+                    if(flipped.length < 2 && this.style.backgroundImage === '') { 
+                        this.style.backgroundImage = `url('${s}')`; 
                         flipped.push({el:this, n:s}); 
-                        if(flipped.length==2) { 
-                            if(flipped[0].n != flipped[1].n) {
-                                setTimeout(()=>{flipped[0].el.style.backgroundImage=''; flipped[1].el.style.backgroundImage=''; flipped=[];}, 600); 
-                            } else { flipped=[]; }
+                        if(flipped.length === 2) { 
+                            if(flipped[0].n !== flipped[1].n) {
+                                setTimeout(()=>{ flipped[0].el.style.backgroundImage=''; flipped[1].el.style.backgroundImage=''; flipped=[]; }, 700); 
+                            } else { flipped = []; }
                         } 
                     }
                 }; c.appendChild(d);
@@ -224,19 +216,16 @@
         }
         iniciarJogoMemoria();
 
-        // LÓGICA DO JOGO DA BOLINHA
+        // JOGO DA BOLINHA (PONG)
         const canv = document.getElementById("pongCanvas"), ctx = canv.getContext("2d");
         let bX, bY, dX, dY, pX, pts, run = false;
-
         function iniciarJogoBolinha() {
             canv.width = canv.offsetWidth; canv.height = 300;
             run = true; pts = 0; bX = canv.width/2; bY = 30; dX = 5; dY = 5; pX = (canv.width-90)/2;
             document.getElementById('btnStartBolinha').style.display = 'none';
             document.getElementById('vitoriaBolinha').style.display = 'none';
-            document.getElementById('statusBolinha').innerText = "Pontos: 0 / 40";
             loop();
         }
-
         function loop() {
             if(!run) return;
             ctx.clearRect(0,0,canv.width,canv.height);
@@ -247,25 +236,18 @@
             if(bY + dY > canv.height - 25) {
                 if(bX > pX && bX < pX + 90) { 
                     dY = -dY; pts++; 
-                    document.getElementById('statusBolinha').innerText = "Pontos: " + pts + " / 40";
-                    if(pts >= 40) { 
-                        run = false; 
-                        document.getElementById('vitoriaBolinha').style.display = 'block'; 
-                        return; 
-                    }
+                    document.getElementById('statusBolinha').innerText = "Pontos: " + pts + " / 40"; 
+                    if(pts >= 40){ run=false; document.getElementById('vitoriaBolinha').style.display='block'; return; } 
                 } else { 
-                    run = false; 
-                    alert("A bolinha caiu! Tente de novo."); 
+                    run = false; alert("A bolinha caiu! Tente de novo."); 
                     document.getElementById('btnStartBolinha').style.display = 'block'; 
                 }
             }
-            bX += dX; bY += dY;
-            requestAnimationFrame(loop);
+            bX += dX; bY += dY; requestAnimationFrame(loop);
         }
-
-        canv.addEventListener('touchmove', (e) => {
-            let rect = canv.getBoundingClientRect();
-            pX = e.touches[0].clientX - rect.left - 45;
+        canv.addEventListener('touchmove', (e) => { 
+            const rect = canv.getBoundingClientRect();
+            pX = e.touches[0].clientX - rect.left - 45; 
         });
 
         // CORAÇÕES FLUTUANTES
@@ -274,10 +256,9 @@
             c.classList.add("coracao-flutuante");
             c.innerHTML = "🤍";
             c.style.left = Math.random() * 100 + "vw";
-            c.style.animationDuration = Math.random() * 3 + 4 + "s";
             document.body.appendChild(c);
-            setTimeout(() => { c.remove(); }, 7000);
-        }, 1500);
+            setTimeout(() => { c.remove(); }, 6000);
+        }, 2000);
     </script>
 </body>
-    </html>
+                                                                                    </html>
