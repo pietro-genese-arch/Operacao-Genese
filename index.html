@@ -9,70 +9,59 @@
         body { background: radial-gradient(circle at center, #1a050d 0%, #050508 100%); color: #ffffff; font-family: 'Segoe UI', Arial, sans-serif; min-height: 100vh; overflow: hidden; display: flex; justify-content: center; align-items: center; perspective: 1200px; }
         .cena-3d { width: 100%; height: 100vh; display: flex; justify-content: center; align-items: center; transform-style: preserve-3d; }
         .objeto-3d { width: 300px; height: 300px; position: relative; transform-style: preserve-3d; transform: rotateX(-10deg) rotateY(0deg); cursor: grab; transition: transform 0.1s ease; }
-        .objeto-3d:active { cursor: grabbing; }
         .coracao-realista { position: absolute; width: 100%; height: 100%; transform-style: preserve-3d; animation: palpitar 1s infinite ease-in-out alternate; }
         .coracao-corpo { position: absolute; width: 150px; height: 240px; background: linear-gradient(135deg, #ff0f4b 0%, #b3002d 100%); border-radius: 150px 150px 0 0; transform-style: preserve-3d; box-shadow: 0 0 40px rgba(255, 15, 75, 0.6); }
         .esquerdo { left: 150px; transform: rotate(-45deg); transform-origin: 0 100%; }
         .direito { left: 0; transform: rotate(45deg); transform-origin: 100% 100%; }
-        .coracao-corpo::after { content: ''; position: absolute; top: 5px; left: 15px; width: 85%; height: 50%; background: linear-gradient(to bottom, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%); border-radius: 130px 130px 0 0; }
-        @keyframes palpitar { 0% { transform: scale(1); } 40% { transform: scale(1.06); } 60% { transform: scale(1.02); } 100% { transform: scale(1.08); } }
-        .painel-central { position: absolute; width: 220px; height: 90px; background: rgba(10, 10, 15, 0.85); border: 2px solid #ff0f4b; border-radius: 12px; top: 50%; left: 50%; transform: translate(-50%, -50%) translateZ(60px); display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 0 25px #ff0f4b, inset 0 0 15px rgba(255,15,75,0.4); backdrop-filter: blur(5px); z-index: 50; }
-        .texto-topo { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 3px; color: #ff99bb; margin-bottom: 2px; font-weight: bold; }
-        .cronometro { font-family: 'Courier New', Courier, monospace; font-size: 2rem; font-weight: bold; color: #00ffff; text-shadow: 0 0 12px #00ffff; }
-        #tela-impacto { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: radial-gradient(circle at center, #230311 0%, #050508 100%); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 1.5s ease; overflow: hidden; }
-        #tela-impacto.ativo { opacity: 1; pointer-events: auto; }
-        .caixa-mensagem { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 31, 90, 0.3); backdrop-filter: blur(15px); padding: 40px 30px; border-radius: 20px; max-width: 85%; width: 500px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(255, 15, 75, 0.2); z-index: 1100; transform: scale(0.7); opacity: 0; transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s; }
-        #tela-impacto.ativo .caixa-mensagem { transform: scale(1); opacity: 1; }
+        @keyframes palpitar { 0% { transform: scale(1); } 100% { transform: scale(1.08); } }
+        #tela-impacto { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: radial-gradient(circle at center, #230311 0%, #050508 100%); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 1; pointer-events: auto; overflow: hidden; }
+        .caixa-mensagem { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 31, 90, 0.3); backdrop-filter: blur(15px); padding: 40px 30px; border-radius: 20px; max-width: 85%; width: 500px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(255, 15, 75, 0.2); z-index: 1100; }
         .alerta-mensagem { font-size: 2.2rem; color: #ff1f5a; margin-bottom: 20px; text-shadow: 0 0 15px rgba(255,31,90,0.6); font-weight: bold; }
         .texto-carta { font-size: 1.1rem; line-height: 1.6; color: #e0e0e0; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
         .glitter { position: absolute; width: 6px; height: 6px; border-radius: 50%; opacity: 0; animation: caindoGlitter 4s linear infinite; }
         @keyframes caindoGlitter { 0% { transform: translateY(-20px) translateX(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(105vh) translateX(50px) rotate(360deg); opacity: 0; } }
         .balao { position: absolute; width: 40px; height: 50px; border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%; opacity: 0.8; animation: subindoBalao 6s linear infinite; bottom: -70px; }
-        .balao::after { content: ""; position: absolute; bottom: -8px; left: 18px; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-bottom: 8px solid rgba(255,255,255,0.5); }
         @keyframes subindoBalao { 0% { transform: translateY(0) translateX(0); opacity: 0.8; } 100% { transform: translateY(-115vh) translateX(-30px); opacity: 0; } }
     </style>
 </head>
 <body>
-    <div class="cena-3d">
-        <div class="objeto-3d" id="coracao-3d">
-            <div class="coracao-realista">
-                <div class="coracao-corpo esquerdo"></div>
-                <div class="coracao-corpo direito"></div>
-            </div>
-            <div class="painel-central">
-                <div class="texto-topo">Contagem Regressiva</div>
-                <div class="cronometro" id="timer-display">00:00:00</div>
-            </div>
-        </div>
-    </div>
     <div id="tela-impacto">
         <div class="caixa-mensagem">
             <div class="alerta-mensagem">💖 Parabéns, meu amor! 💖</div>
             <div class="texto-carta">
-                Nós completamos mais um mês e agora são 7 meses juntos! <br><br>
+                Nós completamos mais um mês e agora são 7 meses juntos!<br><br>
                 Eu sei que nos últimos dias a gente brigou muito, mas faz parte das nossas vidas. O que importa é o que sentimos e o nosso desejo de continuar construindo nossa história. Eu te amo meu amor!
             </div>
         </div>
     </div>
     <script>
-        const objeto = document.getElementById('coracao-3d');
-        let movendo = false, pX = 0, pY = 0, rX = -10, rY = 0;
-        function iniciarGiro(e) { movendo = true; pX = e.type === "touchstart" ? e.touches[0].clientX : e.clientX; pY = e.type === "touchstart" ? e.touches[0].clientY : e.clientY; }
-        function girando(e) { if (!movendo) return; e.preventDefault(); const cX = e.type === "touchmove" ? e.touches[0].clientX : e.clientX; const cY = e.type === "touchmove" ? e.touches[0].clientY : e.clientY; rY += (cX - pX) * 0.5; rX -= (cY - pY) * 0.5; rX = Math.max(-40, Math.min(40, rX)); objeto.style.transform = `rotateX(${rX}deg) rotateY(${rY}deg)`; pX = cX; pY = cY; }
-        objeto.addEventListener('mousedown', iniciarGiro); window.addEventListener('mousemove', girando); window.addEventListener('mouseup', () => movendo = false); objeto.addEventListener('touchstart', iniciarGiro, { passive: false }); window.addEventListener('touchmove', girando, { passive: false }); window.addEventListener('touchend', () => movendo = false);
-        function sincronizarRelogio() {
-            const agora = new Date(); const alvo = new Date(); alvo.setHours(12, 0, 0, 0); let tempoRestante = alvo - agora;
-            if (tempoRestante <= 0) { document.getElementById('timer-display').innerHTML = "00:00:00"; dispararEfeitoMagico(); clearInterval(loopContagem); return; }
-            const segTotais = Math.floor(tempoRestante / 1000), hrs = Math.floor(segTotais / 3600), mins = Math.floor((segTotais % 3600) / 60), segs = segTotais % 60;
-            document.getElementById('timer-display').innerHTML = hrs.toString().padStart(2, '0') + ":" + mins.toString().padStart(2, '0') + ":" + segs.toString().padStart(2, '0');
+        window.onload = function() {
+            const tela = document.getElementById('tela-impacto');
+            const coresGlitter = ['#ff0f4b', '#00ffff', '#fffa00', '#ffffff', '#ff00ff'];
+            const coresBalao = ['rgba(255,31,90,0.6)', 'rgba(0,255,255,0.6)', 'rgba(255,0,255,0.6)', 'rgba(255,100,100,0.6)'];
+            for (let i = 0; i < 100; i++) {
+                const glitter = document.createElement('div');
+                glitter.classList.add('glitter');
+                glitter.style.left = Math.random() * 100 + 'vw';
+                glitter.style.top = -Math.random() * 20 + 'px';
+                glitter.style.backgroundColor = coresGlitter[Math.floor(Math.random() * coresGlitter.length)];
+                glitter.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                glitter.style.animationDelay = Math.random() * 4 + 's';
+                tela.appendChild(glitter);
+            }
+            for (let i = 0; i < 25; i++) {
+                const balao = document.createElement('div');
+                balao.classList.add('balao');
+                balao.style.left = Math.random() * 90 + 'vw';
+                balao.style.backgroundColor = coresBalao[Math.floor(Math.random() * coresBalao.length)];
+                balao.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                balao.style.animationDelay = Math.random() * 5 + 's';
+                const tam = Math.random() * 20 + 30;
+                balao.style.width = tam + 'px';
+                balao.style.height = (tam * 1.25) + 'px';
+                tela.appendChild(balao);
+            }
         }
-        function dispararEfeitoMagico() {
-            const tela = document.getElementById('tela-impacto'); tela.classList.add('ativo');
-            const coresGlitter = ['#ff0f4b', '#00ffff', '#fffa00', '#ffffff', '#ff00ff'], coresBalao = ['rgba(255,31,90,0.6)', 'rgba(0,255,255,0.6)', 'rgba(255,0,255,0.6)', 'rgba(255,100,100,0.6)'];
-            for (let i = 0; i < 100; i++) { const glitter = document.createElement('div'); glitter.classList.add('glitter'); glitter.style.left = Math.random() * 100 + 'vw'; glitter.style.top = -Math.random() * 20 + 'px'; glitter.style.backgroundColor = coresGlitter[Math.floor(Math.random() * coresGlitter.length)]; glitter.style.animationDuration = (Math.random() * 2 + 2) + 's'; glitter.style.animationDelay = Math.random() * 4 + 's'; tela.appendChild(glitter); }
-            for (let i = 0; i < 25; i++) { const balao = document.createElement('div'); balao.classList.add('balao'); balao.style.left = Math.random() * 90 + 'vw'; balao.style.backgroundColor = coresBalao[Math.floor(Math.random() * coresBalao.length)]; balao.style.animationDuration = (Math.random() * 3 + 4) + 's'; balao.style.animationDelay = Math.random() * 5 + 's'; const tam = Math.random() * 20 + 30; balao.style.width = tam + 'px'; balao.style.height = (tam * 1.25) + 'px'; tela.appendChild(balao); }
-        }
-        const loopContagem = setInterval(sincronizarRelogio, 1000); sincronizarRelogio();
     </script>
 </body>
 </html>
